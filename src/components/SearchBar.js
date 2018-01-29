@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../styles/base';
-// import NavBar from './NavBar';
 
 //--------------------------------
 //------------Styles--------------
@@ -42,10 +41,6 @@ const Input = styled.input`
 		font-style: italic;
 		letter-spacing: 0.1rem;
 	}
-
-	/* &:focus {
-		border-bottom: 0.4rem solid ${colors.lightOchre};
-	} */
 `;
 
 //--------------------------------
@@ -62,7 +57,6 @@ const SearchBar = props => {
 				autoFocus
 				onChange={e => props.onSearchTextChange(e.target.value)}
 			/>
-			{/* <NavBar handleNav={props.handleNav} openNav={props.openNav} /> */}
 		</Wrapper>
 	);
 };

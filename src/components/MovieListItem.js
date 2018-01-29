@@ -22,8 +22,7 @@ const Li = styled.li`
 		position: absolute;
 		top: 0;
 		left: 0;
-		/* overflow: hidden; */
-		transition: all 0.8s;
+		transition: all 0.8s 0.3s;
 	}
 
 	> div:last-child {
@@ -138,7 +137,6 @@ const MovieStats = styled.div`
 //--------Functionality-----------
 //--------------------------------
 const MovieListItem = props => {
-	console.log(props.genres);
 	return (
 		<Li>
 			<CardFront>

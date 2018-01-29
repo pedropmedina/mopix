@@ -1,27 +1,46 @@
 import React from 'react';
 import MovieListItem from './MovieListItem';
 import styled, { css } from 'styled-components';
+import { colors } from '../styles/base';
 
 //--------------------------------
 //------------Styles--------------
 //--------------------------------
+const Wrapper = styled.div`
+	transition: all 0.3s;
+	${props =>
+		props.openNav &&
+		css`
+			transform: scale(0.99);
+			transform-origin: center;
+			opacity: 0.3;
+		`};
+`;
+
 const Ul = styled.ul`
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
 	margin: 0 auto;
 	padding: 0;
+	padding-bottom: 2rem;
 	padding-top: 13rem;
 	max-width: 150rem;
 	overflow: hidden;
-	${props =>
-		props.openNav &&
-		css`
-			transform: scale(0.98);
-			transform-origin: left top;
-			opacity: 0.3;
-		`};
-	transition: all 0.3s;
+`;
+
+const LoadBtn = styled.button`
+	border: none;
+	background-color: transparent;
+	border: 0.2rem solid ${colors.lightOchre};
+	color: ${colors.lightOchre};
+	padding: 1rem 2rem;
+	font-size: 1.3rem;
+	text-transform: uppercase;
+	display: block;
+	margin: 3rem auto;
+	opacity: ${props => (props.movies.length === 0 ? 0 : 1)};
+	transition: opacity 0.5s;
 `;
 
 //--------------------------------
@@ -56,7 +75,23 @@ const MovieList = props => {
 			);
 		}
 	});
-	return <Ul openNav={props.openNav}>{movies}</Ul>;
+
+	// handle number of page load
+	const onClickLoadMore = () => {
+		let page = props.pageNum + 1;
+		props.handleLoadMore(page);
+	};
+
+	return (
+		<Wrapper openNav={props.openNav}>
+			<Ul>{movies}</Ul>
+			{!props.searchText && (
+				<LoadBtn onClick={onClickLoadMore} movies={props.movies}>
+					Load More
+				</LoadBtn>
+			)}
+		</Wrapper>
+	);
 };
 
 export default MovieList;

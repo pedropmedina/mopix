@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import MovieList from './MovieList';
 import SearchBar from './SearchBar';
-// import FilterBar from './FilterBar';
 import NavBar from './NavBar';
 
 const PATH_BASE = 'http://api.themoviedb.org/3';
@@ -29,14 +28,15 @@ class App extends React.Component {
 		movies: [],
 		genres: [],
 		searchText: '',
-		currentFilter: '',
+		currentFilter: 'mostPopular',
 		openNav: false,
+		pageNum: 1,
 	};
 
 	// main api call
 	fetchSearchMovies = (
 		searchText = '',
-		currentFilter = 'mostPopular',
+		currentFilter = this.state.currentFilter,
 		page = 1,
 		language = 'en-US',
 		api_key = '9b474f02f07d39df7595de544515f7eb',
@@ -57,8 +57,26 @@ class App extends React.Component {
 		axios
 			.get(URL)
 			.then(response => {
-				this.setState({ movies: response.data.results });
-				console.log(response);
+				if (page > 1) {
+					const updateMovieList = [
+						...this.state.movies,
+						...response.data.results,
+					].filter((movie, index, self) => {
+						return (
+							index ===
+							self.findIndex(m => {
+								return m.id === movie.id;
+							})
+						);
+					});
+					this.setState(() => ({
+						movies: updateMovieList,
+					}));
+				} else {
+					this.setState(() => ({
+						movies: response.data.results,
+					}));
+				}
 			})
 			.catch(err => console.log(err));
 	};
@@ -77,6 +95,7 @@ class App extends React.Component {
 			.catch(err => console.log(err));
 	};
 
+	// initial call to api
 	componentDidMount() {
 		this.fetchSearchMovies();
 		this.fetchMoviesGenre();
@@ -88,7 +107,7 @@ class App extends React.Component {
 		this.fetchSearchMovies(searchText);
 		this.setState(() => ({
 			searchText,
-			currentFilter: '',
+			pageNum: 1,
 		}));
 	};
 
@@ -98,12 +117,18 @@ class App extends React.Component {
 		this.fetchSearchMovies(undefined, currentFilter);
 		this.setState(() => ({
 			currentFilter,
+			pageNum: 1,
 		}));
 	};
 
 	// most popular movies
 	handleMostPopularMovies = () => {
-		this.fetchSearchMovies();
+		const currentFilter = 'mostPopular';
+		this.fetchSearchMovies(undefined, currentFilter);
+		this.setState(() => ({
+			currentFilter,
+			pageNum: 1,
+		}));
 	};
 
 	// now playing movies
@@ -112,6 +137,7 @@ class App extends React.Component {
 		this.fetchSearchMovies(undefined, currentFilter);
 		this.setState(() => ({
 			currentFilter,
+			pageNum: 1,
 		}));
 	};
 
@@ -121,6 +147,7 @@ class App extends React.Component {
 		this.fetchSearchMovies(undefined, currentFilter);
 		this.setState(() => ({
 			currentFilter,
+			pageNum: 1,
 		}));
 	};
 
@@ -131,16 +158,28 @@ class App extends React.Component {
 		}));
 	};
 
+	// handle load more pages
+	handleLoadMore = num => {
+		const pageNum = num;
+		this.fetchSearchMovies(undefined, this.state.currentFilter, pageNum);
+		this.setState(() => ({
+			pageNum,
+		}));
+	};
+
 	render() {
 		return (
 			<MainWrapper>
-				{/* <FilterBar
+				<NavBar
+					searchText={this.state.searchText}
+					currentFilter={this.state.currentFilter}
+					openNav={this.state.openNav}
+					handleNav={this.handleNav}
 					onClickTopRated={this.handleTopRatedMovies}
 					onClickMostPopular={this.handleMostPopularMovies}
 					onClickNowPlaying={this.handleNowPlayingMovies}
 					onClickUpcoming={this.handleUpcomingMovies}
-				/> */}
-				<NavBar handleNav={this.handleNav} openNav={this.state.openNav} />
+				/>
 				<SearchBar
 					searchText={this.state.searchText}
 					onSearchTextChange={this.updateSearchText}
@@ -151,6 +190,9 @@ class App extends React.Component {
 					movies={this.state.movies}
 					genres={this.state.genres}
 					openNav={this.state.openNav}
+					pageNum={this.state.pageNum}
+					searchText={this.state.searchText}
+					handleLoadMore={this.handleLoadMore}
 				/>
 			</MainWrapper>
 		);
