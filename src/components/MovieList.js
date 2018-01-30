@@ -46,7 +46,6 @@ const LoadBtn = styled.button`
 //--------------------------------
 //--------Functionality-----------
 //--------------------------------
-
 const MovieList = props => {
 	const movies = props.movies.map(movie => {
 		if (!movie.poster_path || !movie.backdrop_path) {

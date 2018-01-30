@@ -10,7 +10,7 @@ const Li = styled.li`
 	background-color: transparent;
 	width: 30rem;
 	height: 50rem;
-	margin: 1.5rem;
+	margin: 1.9rem;
 	position: relative;
 	perspective: 150rem;
 
@@ -18,10 +18,12 @@ const Li = styled.li`
 		width: 100%;
 		height: 100%;
 		backface-visibility: hidden;
-		box-shadow: 0 0.7rem 1.7rem rgba(0, 0, 0, 0.3);
+		box-shadow: 0 0.7rem 1.5rem rgba(0, 0, 0, 0.3);
 		position: absolute;
 		top: 0;
 		left: 0;
+		/* border-radius: 0.4rem;
+		overflow: hidden; */
 		transition: all 0.8s 0.3s;
 	}
 
@@ -29,53 +31,94 @@ const Li = styled.li`
 		transform: rotateY(180deg);
 	}
 
-	&:hover > div:first-child {
+	/* &:hover > div:first-child {
 		transform: rotateY(-180deg);
 	}
 
 	&:hover > div:last-child {
 		transform: rotateY(0);
-	}
+	} */
 `;
 
 const CardFront = styled.div`
 	> img {
-		height: 100%;
+		height: 90%;
 		width: 100%;
 		object-fit: cover;
+		border-radius: 0.4rem 0.4rem 0 0;
 	}
 
 	> div {
 		width: 100%;
 		height: 10%;
-		font-size: 1.2rem;
-		/* padding: 2rem 1.5rem; */
-		background-color: ${colors.lightOchre};
-		color: ${colors.lightestGray};
+		font-size: 1.9rem;
+		background-color: ${colors.darkPurple};
+		color: ${colors.lightOchre};
+		padding: 2rem 5rem;
 		display: flex;
-		/* justify-content: space-around; */
+		justify-content: space-between;
 		align-items: center;
 		position: absolute;
 		left: 0;
 		bottom: 0;
+		border-radius: 0 0 0.4rem 0.4rem;
 
-		> div:first-child {
-			flex: 3 0 85%;
-		}
-
-		> div:last-child {
-			flex: 1 0 15%;
-		}
-
-		> div > i {
-			margin: 0 0.5rem;
-		}
-
-		> div:first-child > span:last-child {
-			font-size: 1rem;
+		span {
+			font-size: 1.4rem;
 			font-style: italic;
-			margin-left: 0.3rem;
+			margin-left: 0.5rem;
 		}
+
+		> div {
+			&:not(:last-child) {
+				color: ${colors.midPurple};
+			}
+		}
+	}
+`;
+
+const Icons = styled.i`
+	position: relative;
+	padding: 0.2rem;
+
+	> span {
+		visibility: hidden;
+		width: 12rem;
+		background-color: ${colors.midPurple};
+		color: ${colors.midGray};
+		text-align: center;
+		border-radius: 0.4rem;
+		padding: 0.5rem 0;
+		position: absolute;
+		top: 120%;
+		left: 50%;
+		transform: translateX(-54%);
+		opacity: 0;
+		z-index: 1;
+		transition: opacity 0.3s;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			border-width: 0.5rem;
+			border-style: solid;
+			border-color: transparent transparent ${colors.midPurple} transparent;
+		}
+	}
+
+	&:hover span {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	&:hover {
+		color: ${props =>
+			props.checkmark
+				? '#29722a'
+				: props.list ? colors.midGray : props.likes ? '#bf3b59' : false};
 	}
 `;
 
@@ -143,13 +186,25 @@ const MovieListItem = props => {
 				<img src={props.posterUrl} alt="" />
 				<div>
 					<div>
-						<i className="ion-ios-film" />
-						<span>{props.title}</span>
-						<span>({props.releaseDate.slice(0, 4)})</span>
+						<Icons className="ion-ios-checkmark" checkmark>
+							<span>save to list</span>
+						</Icons>
 					</div>
 					<div>
-						<i className="ion-star" />
-						<span>{props.votes}</span>
+						<Icons className="ion-ios-list" list>
+							<span>create list</span>
+						</Icons>
+					</div>
+					<div>
+						<Icons className="ion-ios-heart" likes>
+							<span>love it</span>
+						</Icons>
+					</div>
+					<div>
+						<Icons className="ion-star">
+							<span>rating</span>
+						</Icons>
+						<span>{props.votes} / 10</span>
 					</div>
 				</div>
 			</CardFront>

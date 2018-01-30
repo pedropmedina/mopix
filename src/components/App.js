@@ -57,6 +57,7 @@ class App extends React.Component {
 		axios
 			.get(URL)
 			.then(response => {
+				console.log(response.data);
 				if (page > 1) {
 					const updateMovieList = [
 						...this.state.movies,
