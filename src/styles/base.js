@@ -9,4 +9,7 @@ export const colors = {
 	lightGray: '#ededef',
 	lightestGray: '#f2f2f3',
 	lightOchre: '#f2b632',
+
+	// transparency
+	transLightGray: 'rgba(237, 237, 239, .5)',
 };

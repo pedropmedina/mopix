@@ -29,8 +29,8 @@ class App extends React.Component {
 		genres: [],
 		searchText: '',
 		currentFilter: 'mostPopular',
-		openNav: false,
 		pageNum: 1,
+		openNav: false,
 	};
 
 	// main api call

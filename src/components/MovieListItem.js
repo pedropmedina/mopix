@@ -22,25 +22,11 @@ const Li = styled.li`
 		position: absolute;
 		top: 0;
 		left: 0;
-		/* border-radius: 0.4rem;
-		overflow: hidden; */
 		transition: all 0.8s 0.3s;
 	}
-
-	> div:last-child {
-		transform: rotateY(180deg);
-	}
-
-	/* &:hover > div:first-child {
-		transform: rotateY(-180deg);
-	}
-
-	&:hover > div:last-child {
-		transform: rotateY(0);
-	} */
 `;
 
-const CardFront = styled.div`
+const Card = styled.div`
 	> img {
 		height: 90%;
 		width: 100%;
@@ -48,7 +34,76 @@ const CardFront = styled.div`
 		border-radius: 0.4rem 0.4rem 0 0;
 	}
 
-	> div {
+	> div:nth-of-type(1) {
+		display: inline-block;
+		position: absolute;
+		top: 5%;
+		right: 2rem;
+		font-size: 1.7rem;
+		color: ${colors.midPurple};
+		width: 3.5rem;
+		height: 3.5rem;
+		background-color: ${colors.transLightGray};
+		border-radius: 50%;
+		box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.4);
+
+		> i {
+			display: inline-block;
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	> div:nth-of-type(2) {
+		display: inline-block;
+		position: absolute;
+		bottom: 10%;
+		right: 2rem;
+		font-size: 2.3rem;
+		color: ${colors.midPurple};
+
+		&:hover {
+			color: ${colors.lightOchre};
+		}
+
+		&:hover + div {
+			opacity: 0.92;
+			visibility: visible;
+		}
+	}
+
+	> div:nth-of-type(3) {
+		position: absolute;
+		bottom: 13%;
+		right: 5rem;
+		width: 80%;
+		line-height: 1.5;
+		font-size: 1.1rem;
+		letter-spacing: 0.1rem;
+		padding: 1rem 2rem;
+		background-color: ${colors.midPurple};
+		color: ${colors.midGray};
+		border-radius: 0.6rem;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.5s;
+
+		> h3 {
+			margin-bottom: 0.3rem;
+			color: ${colors.lightGray};
+
+			> span {
+				margin-left: 0.2rem;
+				font-style: italic;
+				font-weight: 300;
+				font-size: 1rem;
+			}
+		}
+	}
+
+	> div:nth-of-type(4) {
 		width: 100%;
 		height: 10%;
 		font-size: 1.9rem;
@@ -72,6 +127,7 @@ const CardFront = styled.div`
 		> div {
 			&:not(:last-child) {
 				color: ${colors.midPurple};
+				cursor: pointer;
 			}
 		}
 	}
@@ -90,7 +146,7 @@ const Icons = styled.i`
 		border-radius: 0.4rem;
 		padding: 0.5rem 0;
 		position: absolute;
-		top: 120%;
+		top: 130%;
 		left: 50%;
 		transform: translateX(-54%);
 		opacity: 0;
@@ -118,62 +174,8 @@ const Icons = styled.i`
 		color: ${props =>
 			props.checkmark
 				? '#29722a'
-				: props.list ? colors.midGray : props.likes ? '#bf3b59' : false};
+				: props.createList ? colors.midGray : props.likes ? '#bf3b59' : false};
 	}
-`;
-
-const CardBack = styled.div`
-	background-color: ${colors.lightOchre};
-	overflow-y: hidden;
-	color: ${colors.darkPurple};
-	font-size: 1.2rem;
-
-	h4 {
-		display: inline-block;
-		margin-right: 1rem;
-		font-weight: 300;
-		color: ${colors.midPurple};
-	}
-
-	span {
-		font-weight: 400;
-		color: ${colors.lightestGray};
-	}
-
-	> p {
-		padding: 1.5rem;
-		font-size: 1.3rem;
-		text-overflow: ellipse;
-	}
-`;
-
-const MovieBackdrop = styled.div`
-	position: relative;
-
-	img {
-		filter: opacity(70%);
-	}
-
-	h3 {
-		position: absolute;
-		top: 16.7rem;
-		right: 2rem;
-		transform: translateY(-50%);
-		font-size: 1.5rem;
-		background-color: ${colors.darkPurple};
-		color: ${colors.lightestGray};
-		/* box-decoration-break: clone; */
-		padding: 0.5rem 1.5rem;
-	}
-`;
-
-const MovieGenres = styled.div`
-	margin-top: 3rem;
-	padding: 0 1.5rem;
-`;
-
-const MovieStats = styled.div`
-	padding: 0 1.5rem;
 `;
 
 //--------------------------------
@@ -182,8 +184,21 @@ const MovieStats = styled.div`
 const MovieListItem = props => {
 	return (
 		<Li>
-			<CardFront>
+			<Card>
 				<img src={props.posterUrl} alt="" />
+				<div>
+					<i className="ion-arrow-resize" />
+				</div>
+				<div>
+					<i className="ion-ios-information" />
+				</div>
+				<div>
+					<h3>
+						{props.title}
+						<span>({props.releaseDate.slice(0, 4)})</span>
+					</h3>
+					<p>{props.overview}</p>
+				</div>
 				<div>
 					<div>
 						<Icons className="ion-ios-checkmark" checkmark>
@@ -191,7 +206,7 @@ const MovieListItem = props => {
 						</Icons>
 					</div>
 					<div>
-						<Icons className="ion-ios-list" list>
+						<Icons className="ion-ios-list" createList>
 							<span>create list</span>
 						</Icons>
 					</div>
@@ -207,41 +222,7 @@ const MovieListItem = props => {
 						<span>{props.votes} / 10</span>
 					</div>
 				</div>
-			</CardFront>
-
-			<CardBack>
-				<MovieBackdrop>
-					<img src={props.backdropUrl} alt="" />
-					<h3>{props.title}</h3>
-				</MovieBackdrop>
-				<MovieGenres>
-					<h4>Genre:</h4>
-					<span>{props.genres.join(', ')}</span>
-				</MovieGenres>
-				<MovieStats>
-					<div>
-						<h4>Average Rating:</h4>
-						<span>{props.votes} / 10</span>
-					</div>
-					<div>
-						<h4>Total Votes:</h4>
-						<span>{props.votesCount}</span>
-					</div>
-					<div>
-						<h4>Released Year:</h4>
-						<span>{props.releaseDate.slice(0, 4)}</span>
-					</div>
-				</MovieStats>
-
-				<p>
-					{props.overview.split(' ').length > 40
-						? `${props.overview
-								.split(' ')
-								.slice(0, 40)
-								.join(' ')}...`
-						: props.overview}
-				</p>
-			</CardBack>
+			</Card>
 		</Li>
 	);
 };
