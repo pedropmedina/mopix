@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import MovieList from './MovieList';
-import SearchBar from './SearchBar';
-import NavBar from './NavBar';
+import MovieList from '../components/Movies/MovieList';
+import SearchBar from '../components/SearchBar/SearchBar';
+import NavBar from '../components/NavBar/NavBar';
 
 const PATH_BASE = 'http://api.themoviedb.org/3';
 const PATH_POPULAR = '/movie/popular';

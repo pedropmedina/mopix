@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { colors } from '../styles/base';
+import { colors } from '../../styles/base';
 
 const NavIcon = styled.div`
 	width: 4.5rem;

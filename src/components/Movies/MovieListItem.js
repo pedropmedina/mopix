@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from '../styles/base';
+import { colors } from '../../styles/base';
 
 //--------------------------------
 //------------Styles--------------
@@ -13,12 +13,13 @@ const Li = styled.li`
 	margin: 1.9rem;
 	position: relative;
 	perspective: 150rem;
+	user-select: none;
 
 	> div {
 		width: 100%;
 		height: 100%;
 		backface-visibility: hidden;
-		box-shadow: 0 0.7rem 1.5rem rgba(0, 0, 0, 0.3);
+		box-shadow: 0 0.9rem 1.9rem rgba(0, 0, 0, 0.3);
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -46,6 +47,7 @@ const Card = styled.div`
 		background-color: ${colors.transLightGray};
 		border-radius: 50%;
 		box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.4);
+		cursor: pointer;
 
 		> i {
 			display: inline-block;
@@ -183,47 +185,49 @@ const Icons = styled.i`
 //--------------------------------
 const MovieListItem = props => {
 	return (
-		<Li>
-			<Card>
-				<img src={props.posterUrl} alt="" />
-				<div>
-					<i className="ion-arrow-resize" />
-				</div>
-				<div>
-					<i className="ion-ios-information" />
-				</div>
-				<div>
-					<h3>
-						{props.title}
-						<span>({props.releaseDate.slice(0, 4)})</span>
-					</h3>
-					<p>{props.overview}</p>
-				</div>
-				<div>
-					<div>
-						<Icons className="ion-ios-checkmark" checkmark>
-							<span>save to list</span>
-						</Icons>
+		<div>
+			<Li>
+				<Card>
+					<img src={props.posterUrl} alt="" />
+					<div onClick={() => console.log(props.id)}>
+						<i className="ion-arrow-resize" />
 					</div>
 					<div>
-						<Icons className="ion-ios-list" createList>
-							<span>create list</span>
-						</Icons>
+						<i className="ion-ios-information" />
 					</div>
 					<div>
-						<Icons className="ion-ios-heart" likes>
-							<span>love it</span>
-						</Icons>
+						<h3>
+							{props.title}
+							<span>({props.releaseDate.slice(0, 4)})</span>
+						</h3>
+						<p>{props.overview}</p>
 					</div>
 					<div>
-						<Icons className="ion-star">
-							<span>rating</span>
-						</Icons>
-						<span>{props.votes} / 10</span>
+						<div>
+							<Icons className="ion-ios-checkmark" checkmark>
+								<span>save to list</span>
+							</Icons>
+						</div>
+						<div>
+							<Icons className="ion-ios-list" createList>
+								<span>create list</span>
+							</Icons>
+						</div>
+						<div>
+							<Icons className="ion-ios-heart" likes>
+								<span>love it</span>
+							</Icons>
+						</div>
+						<div>
+							<Icons className="ion-star">
+								<span>rating</span>
+							</Icons>
+							<span>{props.votes} / 10</span>
+						</div>
 					</div>
-				</div>
-			</Card>
-		</Li>
+				</Card>
+			</Li>
+		</div>
 	);
 };
 export default MovieListItem;

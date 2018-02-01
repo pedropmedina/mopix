@@ -1,7 +1,7 @@
 import React from 'react';
 import MovieListItem from './MovieListItem';
 import styled, { css } from 'styled-components';
-import { colors } from '../styles/base';
+import { colors } from '../../styles/base';
 
 //--------------------------------
 //------------Styles--------------
@@ -62,6 +62,7 @@ const MovieList = props => {
 			return (
 				<MovieListItem
 					key={movie.id}
+					id={movie.id}
 					title={movie.title}
 					overview={movie.overview}
 					votes={movie.vote_average}
