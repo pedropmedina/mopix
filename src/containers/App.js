@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import MovieList from '../components/Movies/MovieList';
 import SearchBar from '../components/SearchBar/SearchBar';
 import NavBar from '../components/NavBar/NavBar';
@@ -17,11 +17,6 @@ const PARAM_LANGUAGE = 'language=';
 const PARAM_PAGE = 'page=';
 const PARAM_INCLUDE_ADULT = 'include_adult=';
 const PARAM_SEARCH = 'query=';
-
-const MainWrapper = styled.div`
-	overflow: hidden;
-	position: relative;
-`;
 
 class App extends React.Component {
 	state = {
@@ -170,7 +165,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<MainWrapper>
+			<React.Fragment>
 				<NavBar
 					searchText={this.state.searchText}
 					currentFilter={this.state.currentFilter}
@@ -195,7 +190,7 @@ class App extends React.Component {
 					searchText={this.state.searchText}
 					handleLoadMore={this.handleLoadMore}
 				/>
-			</MainWrapper>
+			</React.Fragment>
 		);
 	}
 }

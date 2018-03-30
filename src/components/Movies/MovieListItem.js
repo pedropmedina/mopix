@@ -185,7 +185,7 @@ const Icons = styled.i`
 //--------------------------------
 const MovieListItem = props => {
 	return (
-		<div>
+		<React.Fragment>
 			<Li>
 				<Card>
 					<img src={props.posterUrl} alt="" />
@@ -227,7 +227,7 @@ const MovieListItem = props => {
 					</div>
 				</Card>
 			</Li>
-		</div>
+		</React.Fragment>
 	);
 };
 export default MovieListItem;

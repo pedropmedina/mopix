@@ -76,10 +76,7 @@ const NavMenu = styled.div`
 	right: ${props => (props.openNav ? '0' : '-30vw')};
 	z-index: 200;
 	transition: all 0.3s cubic-bezier(0.97, 0.01, 0, 1);
-
-	> div {
-		padding: 2rem;
-	}
+	padding: 2rem;
 `;
 
 // const H3 = styled.h3`
@@ -145,41 +142,39 @@ const NavBar = props => {
 				<span>&nbsp;</span>
 			</NavIcon>
 			<NavMenu openNav={props.openNav}>
-				<div>
-					{/* <H3>Categories</H3> */}
-					<Span
-						topRated
-						currentFilter={props.currentFilter}
-						searchText={props.searchText}
-						onClick={props.onClickTopRated}
-					>
-						top rated
-					</Span>
-					<Span
-						mostPopular
-						currentFilter={props.currentFilter}
-						searchText={props.searchText}
-						onClick={props.onClickMostPopular}
-					>
-						most popular
-					</Span>
-					<Span
-						nowPlaying
-						currentFilter={props.currentFilter}
-						searchText={props.searchText}
-						onClick={props.onClickNowPlaying}
-					>
-						now playing
-					</Span>
-					<Span
-						upcoming
-						currentFilter={props.currentFilter}
-						searchText={props.searchText}
-						onClick={props.onClickUpcoming}
-					>
-						upcoming
-					</Span>
-				</div>
+				{/* <H3>Categories</H3> */}
+				<Span
+					topRated
+					currentFilter={props.currentFilter}
+					searchText={props.searchText}
+					onClick={props.onClickTopRated}
+				>
+					top rated
+				</Span>
+				<Span
+					mostPopular
+					currentFilter={props.currentFilter}
+					searchText={props.searchText}
+					onClick={props.onClickMostPopular}
+				>
+					most popular
+				</Span>
+				<Span
+					nowPlaying
+					currentFilter={props.currentFilter}
+					searchText={props.searchText}
+					onClick={props.onClickNowPlaying}
+				>
+					now playing
+				</Span>
+				<Span
+					upcoming
+					currentFilter={props.currentFilter}
+					searchText={props.searchText}
+					onClick={props.onClickUpcoming}
+				>
+					upcoming
+				</Span>
 			</NavMenu>
 		</div>
 	);
